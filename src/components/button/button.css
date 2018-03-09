@@ -1,0 +1,23 @@
+
+.sp-btn {
+  cursor: pointer;
+  border: none;
+  min-height: 32px;
+  min-width: 74px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.sp-btn-full {
+  color: #fcfcfc;
+  background-color: #FF9800;
+}
+
+.sp-btn-hollow {
+  background: #fff;
+  border: 1px solid #eee;
+  color: #FF9800;
+}

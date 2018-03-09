@@ -1,0 +1,6 @@
+node_modules
+firebase-debug.log
+dist
+functions
+yarn-error.log
+.DS_Store
