@@ -3,5 +3,6 @@ module.exports = {
   "globPatterns": [
     "**/*.{js,html,css,png}"
   ],
-  "swDest": "dist/precache.js"
+  "swDest": "dist/precache.js",
+  "navigateFallbackWhitelist": [/^(?!\/__).*/]
 };

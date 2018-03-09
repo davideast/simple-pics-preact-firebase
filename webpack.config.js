@@ -22,8 +22,13 @@ module.exports = {
           "css-loader"
         ]
       }
-    ]
+    ],
   },
+  // optimization: {
+  //   splitChunks: {
+  //     name: false
+  //   }
+  // },
   plugins: [
     new MiniCssExtractPlugin({
       filename: "style.css",

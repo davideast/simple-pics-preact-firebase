@@ -5,12 +5,12 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build:client": "webpack && yarn copy:assets",
-    "build:prod": "webpack -p && yarn copy:assets && yarn build:sw",
+    "build:clean": "rm -rf dist",
+    "build:client": "yarn build:clean && tsc && webpack && yarn copy:assets && yarn build:sw",
+    "build:prod": "yarn build:clean && webpack -p && yarn copy:assets && yarn build:sw",
     "build:server": "webpack --config webpack.server.js",
     "build:sw": "workbox generateSW workbox-config.js",
-    "copy:assets": "cp -R src/client/images dist/images && cp src/client/manifest.json dist/manifest.json && cp src/client/index.html dist/index.html",
-    "copy:workbox": "cp node_modules/workbox-routing/build/workbox-routing.prod.js dist/workbox-routing.prod.js"
+    "copy:assets": "cp -R src/client/images dist/images && cp src/client/manifest.json dist/manifest.json && cp src/client/index.html dist/index.html"
   },
   "dependencies": {
     "@types/node": "^9.4.6",

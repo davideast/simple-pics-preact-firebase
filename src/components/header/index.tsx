@@ -1,6 +1,8 @@
 import { h } from 'preact';
 import './header.css';
 
+import { firebase } from '@firebase/app';
+
 import { User } from '@firebase/auth-types';
 
 import { Button } from '../button';
@@ -17,8 +19,13 @@ export const Header = ({ user }: { user?: User }) => {
 }
 
 export const UserButton = ({ user }: { user?: User }) => {
+  
   return user !== null ?
-    <Avatar /> :
-    <Button text="Login" onClick={() => { }} />;
+    <Avatar user={user} /> :
+    <Button text="Login" onClick={async () => {
+      await import('@firebase/auth');
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider);
+    }} />;
 };
 
