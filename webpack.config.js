@@ -32,12 +32,3 @@ module.exports = {
     })
   ]
 };
-
-const key = {
-  apiKey: "AIzaSyBui6v9Ciy8TCoWzKj0GngEtA-rpZ7ja_4",
-  authDomain: "simple-pics.firebaseapp.com",
-  databaseURL: "https://simple-pics.firebaseio.com",
-  projectId: "simple-pics",
-  storageBucket: "simple-pics.appspot.com",
-  messagingSenderId: "694322561017"
-};
