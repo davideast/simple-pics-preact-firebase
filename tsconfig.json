@@ -11,5 +11,8 @@
       "es2015",
       "dom"
     ]
-  }
+  },
+  "files": [
+    "src/client/sw.ts"
+  ]
 }

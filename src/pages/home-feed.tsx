@@ -25,6 +25,16 @@ export class HomeFeed extends Component<any, HomeFeedState> {
     };
   }
 
+  componentWillMount() {
+     this.feedCol = firestore.collection('feed');
+     this.feedCol
+      .orderBy('timestamp')
+      .onSnapshot(snap => {
+        const feedItems = snap.docs.map(d => d.data() as FeedItem);
+        this.setState({ ...this.state, feedItems })
+      });
+  }
+
   render() {
     const { user, feedItems } = this.state;
     const cards = feedItems.map(item => <Card item={item} />);
