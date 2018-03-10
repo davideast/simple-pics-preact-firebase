@@ -5,11 +5,7 @@ import { FieldValue } from '@firebase/firestore-types';
 
 import { Button } from '../button';
 import { Avatar } from '../avatar';
-
-export interface User { 
-  displayName: string; 
-  photoURL: string 
-}
+import { User } from '../interfaces';
 
 export interface FeedItem {
   user: User;
@@ -24,7 +20,7 @@ export const Card = ({ item }: { item: FeedItem }) => {
     <div class="sp-card">
       <div class="sp-card-topbar">
         <div class="sp-card-author">
-          <Avatar />
+          <Avatar user={item.user} />
           <div class="sp-card-user">{item.user.displayName}</div>
         </div>
         <div class="sp-card-topbar-actions">

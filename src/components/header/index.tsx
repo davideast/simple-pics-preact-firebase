@@ -3,7 +3,7 @@ import './header.css';
 
 import { firebase } from '@firebase/app';
 
-import { User } from '@firebase/auth-types';
+import { User } from '../interfaces';
 
 import { Button } from '../button';
 import { Avatar } from '../avatar';
@@ -28,4 +28,3 @@ export const UserButton = ({ user }: { user?: User }) => {
       firebase.auth().signInWithRedirect(provider);
     }} />;
 };
-

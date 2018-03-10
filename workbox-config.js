@@ -1,8 +1,17 @@
 module.exports = {
-  "globDirectory": "dist/",
-  "globPatterns": [
+  globDirectory: "dist/",
+  globPatterns: [
     "**/*.{js,html,css,png}"
   ],
-  "swDest": "dist/precache.js",
-  "navigateFallbackWhitelist": [/^(?!\/__).*/]
+  swDest: "dist/sw.js",
+  navigateFallbackWhitelist: [/^(?!\/__).*/],
+  runtimeCaching: [
+    {
+      // You can use a RegExp as the pattern:
+      urlPattern: new RegExp('https://firebasestorage.googleapis.com/v0/b/simple-pics.appspot.com/o/feed.*'),
+      handler: 'cacheFirst',
+    }
+  ],
+  skipWaiting: true,
+  clientsClaim: true,
 };

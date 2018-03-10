@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import './avatar.css';
 
-import { User } from '@firebase/auth-types';
+import { User } from '../interfaces';
 
 export const Avatar = ({ user }: { user?: User }) =>
   user === null || typeof user === 'undefined' ?

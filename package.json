@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build:clean": "rm -rf dist",
-    "build:client": "yarn build:clean && tsc && webpack && yarn copy:assets && yarn build:sw",
+    "build:client": "yarn build:clean && webpack && yarn copy:assets && yarn build:sw",
     "build:prod": "yarn build:clean && webpack -p && yarn copy:assets && yarn build:sw",
     "build:server": "webpack --config webpack.server.js",
     "build:sw": "workbox generateSW workbox-config.js",
