@@ -1,4 +1,4 @@
-import { h, render } from 'preact';
+import { h, render, Component } from 'preact';
 import './style.css';
 
 import { HomeFeed } from '../pages/home-feed';

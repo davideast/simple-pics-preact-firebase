@@ -12,6 +12,7 @@
   position: fixed;
   margin-bottom: 20px;
   width: 100%;
+  z-index: 1;
 }
 
 .sp-header-logo {

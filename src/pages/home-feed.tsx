@@ -10,13 +10,14 @@ import { firebase } from '@firebase/app';
 import { FeedItem, Card } from '../components/card';
 import { Header } from '../components/header';
 import { PhotoCapture } from '../components/photo-capture';
+import { Camera } from '../components/camera';
 
 export interface HomeFeedState {
   user?: User;
   feedItems: FeedItem[];
   menuVisible: boolean;
+  view: 'feed' | 'camera';
 }
-
 export class HomeFeed extends Component<any, HomeFeedState> {
   feedCol: any;
 
@@ -26,6 +27,7 @@ export class HomeFeed extends Component<any, HomeFeedState> {
       user: null,
       feedItems: [],
       menuVisible: false,
+      view: 'feed',
     };
   }
 
@@ -45,27 +47,44 @@ export class HomeFeed extends Component<any, HomeFeedState> {
   }
 
   render() {
-    const { user, feedItems, menuVisible } = this.state;
+    const { user, feedItems, menuVisible, view } = this.state;
+    const { history } = this.props;
+    const viewClass = `view-holder show-${view}-view`;
     const follow = !!user;
     const cards = feedItems.map(item => <Card follow={follow} item={item} />);
-    const captureComp = follow ? <PhotoCapture /> : '';
+    const captureComp = follow ? 
+      <PhotoCapture onClick={() => {
+        this.setState({ ...this.state, view: 'camera' });
+      }} /> : '';
+    const cameraComp = view === 'camera' ?
+      <Camera /> : '';
     return (
-      <div class="root">
+      <div className="root">
 
-        <Header 
-          user={user} 
+        <Header
+          user={user}
           menuVisible={menuVisible}
           profileClick={() => {
-            this.setState({ 
-              ...this.state, 
-              menuVisible: !this.state.menuVisible 
+            this.setState({
+              ...this.state,
+              menuVisible: !this.state.menuVisible
             });
           }} />
 
-        <div className="sp-container">
-          {cards}
+        <div className={viewClass}>
+        
+          <div className="sub-view feed-view">
+
+            <div className="sp-container">
+              {cards}
+            </div>
+            {captureComp}
+          </div>
+
+          <div class="sub-view camera-view">
+            {cameraComp}
+          </div>
         </div>
-        {captureComp}
       </div>
     );
   }

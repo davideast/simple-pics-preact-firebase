@@ -9,10 +9,21 @@ body, h1, h2, h3, h4, h5, p {
   margin: 0;
 }
 
+.feed-view {
+  position: relative;
+  transition: transform .4s ease-in-out;
+  height: 100vh;
+}
+
+.camera-view {
+  height: 100vh;
+}
+
 .sp-container {
   margin: 0 auto;
   max-width: 840px;
-  padding: 90px 20px;
+  padding: 0px 20px;
+  margin-top: 90px;
 }
 
 .full-opacity {
@@ -21,4 +32,28 @@ body, h1, h2, h3, h4, h5, p {
 
 .no-opacity {
   opacity: 0 !important;
+}
+
+.root {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.view-holder {
+  display: flex;
+  width: 200vw;
+  /* transform: translateX(-100vw); */
+  transition: transform .4s ease-in-out;
+}
+
+.sub-view {
+  width: 100vw;
+}
+
+.show-feed-view {
+  transform: translateX(0vw);
+}
+
+.show-camera-view {
+  transform: translateX(-100vw);
 }
