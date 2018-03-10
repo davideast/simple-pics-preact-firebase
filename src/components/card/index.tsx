@@ -15,7 +15,11 @@ export interface FeedItem {
   timestamp: FieldValue;
 }
 
-export const Card = ({ item }: { item: FeedItem }) => {
+export const Card = ({ item, follow }: { item: FeedItem; follow: boolean; }) => {
+  const followComp = follow ?
+    (<div class="sp-card-topbar-actions">
+      <Button className="sp-btn-hollow" text="Follow" onClick={() => {}} />
+    </div>) : <span></span>;
   return (
     <div class="sp-card">
       <div class="sp-card-topbar">
@@ -23,9 +27,7 @@ export const Card = ({ item }: { item: FeedItem }) => {
           <Avatar user={item.user} />
           <div class="sp-card-user">{item.user.displayName}</div>
         </div>
-        <div class="sp-card-topbar-actions">
-          <Button className="sp-btn-hollow" text="Follow" onClick={() => {}} />
-        </div>
+        {followComp}
       </div>
       <div class="sp-card-content">
         <img src={item.imgURL} alt={item.caption} />

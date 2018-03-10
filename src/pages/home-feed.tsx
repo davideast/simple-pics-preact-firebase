@@ -44,7 +44,8 @@ export class HomeFeed extends Component<any, HomeFeedState> {
 
   render() {
     const { user, feedItems } = this.state;
-    const cards = feedItems.map(item => <Card item={item} />);
+    const follow = !!user;
+    const cards = feedItems.map(item => <Card follow={follow} item={item} />);
     return (
       <div class="root">
       <Header user={user} />
@@ -53,7 +54,7 @@ export class HomeFeed extends Component<any, HomeFeedState> {
       </div>
       <PhotoCapture />
     </div>
-    )
+    );
   }
 
 }
