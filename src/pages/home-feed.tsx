@@ -17,7 +17,9 @@ export interface HomeFeedState {
   feedItems: FeedItem[];
   menuVisible: boolean;
   view: 'feed' | 'camera';
+  isCameraOpen: boolean;
 }
+
 export class HomeFeed extends Component<any, HomeFeedState> {
   feedCol: any;
 
@@ -28,6 +30,7 @@ export class HomeFeed extends Component<any, HomeFeedState> {
       feedItems: [],
       menuVisible: false,
       view: 'feed',
+      isCameraOpen: false,
     };
   }
 
@@ -46,18 +49,32 @@ export class HomeFeed extends Component<any, HomeFeedState> {
     });
   }
 
+  onCameraOpen() {
+    this.setState({ ...this.state, isCameraOpen: true });
+  }
+
+  onCameraClose() {
+    this.setState({ ...this.state, isCameraOpen: false, view: 'feed' });
+  }
+
   render() {
-    const { user, feedItems, menuVisible, view } = this.state;
+    const { user, feedItems, menuVisible, view, isCameraOpen } = this.state;
     const { history } = this.props;
     const viewClass = `view-holder show-${view}-view`;
-    const follow = !!user;
-    const cards = feedItems.map(item => <Card follow={follow} item={item} />);
-    const captureComp = follow ? 
+    const isAuthed = !!user;
+    const cards = feedItems.map(item => <Card follow={isAuthed} item={item} />);
+    
+    const captureComp = isAuthed ? 
       <PhotoCapture onClick={() => {
         this.setState({ ...this.state, view: 'camera' });
       }} /> : '';
+
     const cameraComp = view === 'camera' ?
-      <Camera /> : '';
+      <Camera 
+        isCameraOpen={isCameraOpen} 
+        onCameraOpen={this.onCameraOpen.bind(this)} 
+        onCameraClose={this.onCameraClose.bind(this)}/> : '';
+
     return (
       <div className="root">
 

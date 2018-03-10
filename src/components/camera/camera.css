@@ -7,3 +7,9 @@
   width: 100%;
   max-height: 80vh;
 }
+
+.sp-camera-bar {
+  display: flex;
+  justify-content: center;
+}
+
