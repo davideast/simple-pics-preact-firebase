@@ -13,7 +13,8 @@ import { PhotoCapture } from '../components/photo-capture';
 
 export interface HomeFeedState {
   user?: User;
-  feedItems: FeedItem[]
+  feedItems: FeedItem[];
+  menuVisible: boolean;
 }
 
 export class HomeFeed extends Component<any, HomeFeedState> {
@@ -23,7 +24,8 @@ export class HomeFeed extends Component<any, HomeFeedState> {
     super();
     this.state = {
       user: null,
-      feedItems: []
+      feedItems: [],
+      menuVisible: false,
     };
   }
 
@@ -43,17 +45,28 @@ export class HomeFeed extends Component<any, HomeFeedState> {
   }
 
   render() {
-    const { user, feedItems } = this.state;
+    const { user, feedItems, menuVisible } = this.state;
     const follow = !!user;
     const cards = feedItems.map(item => <Card follow={follow} item={item} />);
+    const captureComp = follow ? <PhotoCapture /> : '';
     return (
       <div class="root">
-      <Header user={user} />
-      <div className="sp-container">
-        {cards}
+
+        <Header 
+          user={user} 
+          menuVisible={menuVisible}
+          profileClick={() => {
+            this.setState({ 
+              ...this.state, 
+              menuVisible: !this.state.menuVisible 
+            });
+          }} />
+
+        <div className="sp-container">
+          {cards}
+        </div>
+        {captureComp}
       </div>
-      <PhotoCapture />
-    </div>
     );
   }
 

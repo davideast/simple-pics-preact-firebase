@@ -1,9 +1,17 @@
-import { h } from 'preact';
+import { h, ComponentProps } from 'preact';
 import './avatar.css';
 
 import { User } from '../interfaces';
 
-export const Avatar = ({ user }: { user?: User }) =>
+export interface AvatarProps { 
+  user?: User;
+  profileClick?: () => void;
+};
+
+export const Avatar = ({ user, profileClick }: AvatarProps) =>
   user === null || typeof user === 'undefined' ?
-    <div class="sp-avatar"></div> :
-    <img class="sp-avatar" src={user.photoURL} />;
+    <div className="sp-avatar"></div> :
+    <img 
+      className="sp-avatar sp-avatar-pointer" 
+      src={user.photoURL} 
+      onClick={profileClick} />;

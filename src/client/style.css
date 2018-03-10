@@ -14,3 +14,11 @@ body, h1, h2, h3, h4, h5, p {
   max-width: 840px;
   padding: 90px 20px;
 }
+
+.full-opacity {
+  opacity: 1 !important;
+}
+
+.no-opacity {
+  opacity: 0 !important;
+}

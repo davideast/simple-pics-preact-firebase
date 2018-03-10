@@ -1,0 +1,31 @@
+.sp-menu {
+  width: 100px;
+  margin: 0;
+  list-style-type: none;
+  position: absolute;
+  right: 38px;
+  bottom: 0;
+  padding: 0;
+  opacity: 0;
+  border-radius: 6px;
+  border: none;
+}
+
+.sp-menu li {
+  height: 40px;
+  line-height: 40px;
+  text-align: right;
+}
+
+.sp-menu li button {
+  border: 1px solid #ddd;
+  background: #eee;
+  height: inherit;
+  width: 100%;
+  cursor: pointer;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: rgba(0,0,0,.67);
+  border-radius: 6px;
+}
