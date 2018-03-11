@@ -3,40 +3,27 @@ import './camera.css';
 
 import { Button } from '../button';
 
-export interface ButtonProps { 
-  onClick: Function; 
-}
-
 export interface CameraProps {
-  onCameraOpen: Function;
-  onCameraClose: Function; 
+  onCameraOpen: () => void;
+  onCameraClose: () => void; 
+  onCameraPhoto: (imageDataURL: string) => void;
   isCameraOpen: boolean;
 }
 
-const OpenCameraButton = ({ onClick }: ButtonProps) => 
-  <Button text="Open Camera" onClick={onClick} />
-
-const CloseCameraButton = ({ onClick }: ButtonProps) => 
-  <Button text="Close Camera" onClick={onClick} />
-
-const TakePhotoButton = () => 
-  <Button text="Take Photo" onClick={() => {}} />;
-
 export class Camera extends Component<CameraProps, any> {
+
   video: HTMLVideoElement;
+  canvas: HTMLCanvasElement;
   stream: MediaStream;
   src: string;
 
-  async componentDidMount() {
-    this.stream = await navigator.mediaDevices.getUserMedia({ 
-      video: { facingMode: "user" } 
-    });
-    this.src = URL.createObjectURL(this.stream);
-  }
-
-  openCamera() {
+  async openCamera() {
     // A user interaction ("click") must trigger video.play()
     // or it will fail on android chrome
+    this.stream = await navigator.mediaDevices.getUserMedia({ 
+      video: { facingMode: 'user' } 
+    });
+    this.src = URL.createObjectURL(this.stream);
     this.video.src = this.src;
     this.video.play();
     this.props.onCameraOpen();
@@ -49,25 +36,51 @@ export class Camera extends Component<CameraProps, any> {
     this.props.onCameraClose();
   }
 
+  takePhoto() {
+    const width = this.video.videoWidth;
+    const height = this.video.videoHeight;
+
+    const context = this.canvas.getContext('2d');
+    this.canvas.width = width;
+    this.canvas.height = height;
+
+    context.drawImage(this.video, 0, 0, width, height);
+
+    const imageDataURL = this.canvas.toDataURL('image/png');
+    
+    this.props.onCameraPhoto(imageDataURL);
+  }
+
   render() {
     const { onCameraOpen, isCameraOpen } = this.props;
     const cameraButtons = isCameraOpen
-      ? <div>
-          <TakePhotoButton />
-          <CloseCameraButton onClick={this.closeCamera.bind(this)} />
+      ? <div className="sp-camera-bar">
+          <Button
+            text="Close Camera" 
+            className="sp-btn-hollow"
+            onClick={this.closeCamera.bind(this)} />
+          <Button 
+            text="Take Photo" 
+            onClick={this.takePhoto.bind(this)} />
         </div>
-      : <div>
-          <OpenCameraButton onClick={this.openCamera.bind(this)} />
+      : <div className="sp-camera-bar">
+          <Button
+            text="Open Camera"
+            onClick={this.openCamera.bind(this)} />
         </div>;
 
     return (
       <div>
+        <canvas 
+          class="sp-camera-canvas"
+          ref={(canvas: HTMLCanvasElement) => { this.canvas = canvas; } }>
+        </canvas>
+        
         <div class="sp-camera">
           <video ref={(video: HTMLVideoElement) => { this.video = video; }} />
         </div>
-        <div class="sp-camera-bar">
-          {cameraButtons}
-        </div>
+
+        {cameraButtons}
       </div>
     );
   }

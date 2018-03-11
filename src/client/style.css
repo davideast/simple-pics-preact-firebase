@@ -41,7 +41,7 @@ body, h1, h2, h3, h4, h5, p {
 
 .view-holder {
   display: flex;
-  width: 200vw;
+  width: 300vw;
   /* transform: translateX(-100vw); */
   transition: transform .4s ease-in-out;
 }
@@ -56,4 +56,23 @@ body, h1, h2, h3, h4, h5, p {
 
 .show-camera-view {
   transform: translateX(-100vw);
+}
+
+.show-caption-view {
+  transform: translateX(-200vw);
+}
+
+.sp-photo-frame {
+  width: 100vw;
+}
+
+.sp-captured-photo {
+  height: 100%;
+  width: 100%;
+}
+
+.sp-caption-text {
+  height: 38px;
+  width: 100%;
+  font-size: 18px;
 }
