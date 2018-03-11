@@ -29,10 +29,16 @@ export class Camera extends Component<CameraProps, any> {
     this.props.onCameraOpen();
   }
 
+  closeTrack() {
+    if(typeof this.stream !== 'undefined') {
+      const track = this.stream.getTracks()[0];
+      track.stop();
+      this.video.pause();
+    }
+  }
+  
   closeCamera() {
-    const track = this.stream.getTracks()[0];
-    track.stop();
-    this.video.pause();
+    this.closeTrack();
     this.props.onCameraClose();
   }
 
@@ -52,7 +58,7 @@ export class Camera extends Component<CameraProps, any> {
   }
 
   render() {
-    const { onCameraOpen, isCameraOpen } = this.props;
+    const { isCameraOpen } = this.props;
     const cameraButtons = isCameraOpen
       ? <div className="sp-camera-bar">
           <Button
@@ -68,6 +74,10 @@ export class Camera extends Component<CameraProps, any> {
             text="Open Camera"
             onClick={this.openCamera.bind(this)} />
         </div>;
+
+    if(!isCameraOpen) {
+      this.closeTrack();
+    }
 
     return (
       <div>

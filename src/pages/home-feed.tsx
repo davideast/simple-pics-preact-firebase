@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 
 import { CollectionReference } from '@firebase/firestore-types';
 import { User } from '@firebase/auth-types';
+import { FirebaseStorage, UploadTaskSnapshot } from '@firebase/storage-types';
 
 import { firestore } from './firebase-init';
 
@@ -24,9 +25,18 @@ export interface HomeFeedState {
   capturedPhotoDataURL?: string;
 }
 
+export interface AddFeedItem {
+  id: string; 
+  user: User; 
+  snap: UploadTaskSnapshot; 
+  caption: string;
+}
+
 export class HomeFeed extends Component<any, HomeFeedState> {
-  feedCol: any;
+  feedCol: CollectionReference;
   capturedImage: HTMLElement;
+  caption: HTMLInputElement;
+  storage?: FirebaseStorage = null;
 
   constructor() {
     super();
@@ -47,7 +57,7 @@ export class HomeFeed extends Component<any, HomeFeedState> {
       .onSnapshot(snap => {
         const feedItems = snap.docs.map(d => d.data() as FeedItem);
         this.setState({ ...this.state, feedItems })
-      });
+      }, console.error);
 
     await import('@firebase/auth');
     firebase.auth().onAuthStateChanged(user => {
@@ -76,6 +86,30 @@ export class HomeFeed extends Component<any, HomeFeedState> {
     this.setState({ ...state, view });
   }
 
+  async uploadPhoto(id, dataURL: string) {
+    if(this.storage === null) {
+      await import('@firebase/storage');
+      this.storage = firebase.storage();
+    }
+    const ref = this.storage.ref(`feed/${id}`);
+    return ref.putString(dataURL, 'data_url', { contentType: 'image/png' });
+  }
+
+  addFeedItem({ id, user, snap, caption}: AddFeedItem) {
+    const feedItem: FeedItem = {
+      caption,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      user: {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        uid: user.uid
+      },
+      bucketLocation: snap.ref.toString(),
+      imgURL: snap.downloadURL,
+    };
+    this.feedCol.doc(id).set(feedItem);
+  }
+
   render() {
     const { user, feedItems, menuVisible, view, isCameraOpen, capturedPhotoDataURL } = this.state;
     const { history } = this.props;
@@ -101,14 +135,25 @@ export class HomeFeed extends Component<any, HomeFeedState> {
           <img src={capturedPhotoDataURL} />
         </div> 
         <div className="sp-camera-bar">
-          <input placeholder="Caption" class="sp-caption-text" type="text" />
+          <input 
+            ref={(caption: HTMLInputElement) => { this.caption = caption; }}
+            placeholder="Caption" 
+            class="sp-caption-text" 
+            type="text" />
+
           <Button className="sp-btn-hollow" text="Cancel" onClick={() => {
             this.gotoView('camera');
           }} />
 
-          <Button text="Save" onClick={() => {
-            // Cloud Storage for Firebase
+          <Button text="Save" onClick={async () => {
+            // get a generated id from firestore
+            const id = firestore.collection('_').doc().id
+            const snap = await this.uploadPhoto(id, capturedPhotoDataURL);
+            const caption = this.caption.value;
+            this.addFeedItem({ id, user, snap, caption });
+            this.gotoView('feed', { ...this.state, isCameraOpen: false });
           }} />
+
         </div>
       </div>;
 
@@ -153,3 +198,11 @@ export class HomeFeed extends Component<any, HomeFeedState> {
   }
 
 }
+
+/*
+    match /feed/{itemId} {
+    	allow create: if request.auth.uid != null;
+      allow update, delete: if request.auth.uid == resource.data.user.uid; 
+    }
+
+*/
