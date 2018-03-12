@@ -4,3 +4,5 @@ export interface User {
   photoURL: string;
   uid: string;
 }
+
+export type ViewName = 'feed' | 'camera' | 'caption';

@@ -20,6 +20,7 @@
     "mini-css-extract-plugin": "^0.2.0",
     "node-noop": "^1.0.0",
     "preact": "^8.2.7",
+    "preact-async-route": "^2.1.1",
     "preact-render-to-string": "^3.7.0",
     "preact-router": "^2.6.0",
     "ts-loader": "^4.0.1",

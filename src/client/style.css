@@ -9,13 +9,12 @@ body, h1, h2, h3, h4, h5, p {
   margin: 0;
 }
 
-.feed-view {
+.sp-feed-view {
   position: relative;
-  transition: transform .4s ease-in-out;
   height: 100vh;
 }
 
-.camera-view {
+.sp-camera-view {
   height: 100vh;
 }
 
@@ -34,31 +33,36 @@ body, h1, h2, h3, h4, h5, p {
   opacity: 0 !important;
 }
 
-.root {
+.sp-root {
   width: 100vw;
   overflow-x: hidden;
 }
 
-.view-holder {
+.sp-view-holder {
   display: flex;
   width: 300vw;
   /* transform: translateX(-100vw); */
   transition: transform .4s ease-in-out;
 }
 
-.sub-view {
+.sp-sub-view {
   width: 100vw;
 }
 
-.show-feed-view {
+.sp-full-view {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.show-view-0 {
   transform: translateX(0vw);
 }
 
-.show-camera-view {
+.show-view-1 {
   transform: translateX(-100vw);
 }
 
-.show-caption-view {
+.show-view-2 {
   transform: translateX(-200vw);
 }
 
