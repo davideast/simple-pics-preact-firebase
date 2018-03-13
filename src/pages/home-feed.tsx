@@ -5,7 +5,7 @@ import { CollectionReference } from '@firebase/firestore-types';
 import { UserProp, AppUser } from '../components/interfaces';
 
 import { firebase } from '@firebase/app';
-import { firestore, asyncAuthListener } from './firebase-init';
+import { firestore, feedItem$, authState$, asyncFirebaseApp } from './firebase-init';
 
 import { FeedItem, Card } from '../components/card';
 import { Header } from '../components/header';
@@ -41,16 +41,13 @@ export class HomeFeed extends Component<any, HomeFeedState> {
   }
 
   async componentWillMount() {
-    this.feedCol = firestore.collection('feed');
-    this.feedCol
-      .orderBy('timestamp', 'desc')
-      .onSnapshot(snap => {
-        const feedItems = snap.docs.map(d => d.data() as FeedItem);
-        this.setState({ ...this.state, feedItems })
-      }, console.error);
+    feedItem$.subscribe(feedItems => {
+      this.setState({ ...this.state, feedItems });
+    });
 
-      this.authUnlisten = await asyncAuthListener(this);
-    
+    authState$.subscribe(user => {
+      this.setState({ ...this.state, user });
+    });
   }
 
   toggleUserMenu() {
@@ -58,6 +55,17 @@ export class HomeFeed extends Component<any, HomeFeedState> {
       ...this.state,
       menuVisible: !this.state.menuVisible
     });
+  }
+
+  async signIn() {
+    const auth = await asyncFirebaseApp.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithRedirect(provider);
+  }
+
+  async signOut() {
+    const auth = await asyncFirebaseApp.auth();
+    auth.signOut();
   }
 
   render() {
@@ -71,7 +79,9 @@ export class HomeFeed extends Component<any, HomeFeedState> {
         <Header
           user={user}
           menuVisible={menuVisible}
-          profileClick={this.toggleUserMenu.bind(this)} />
+          profileClick={this.toggleUserMenu.bind(this)}
+          onSignIn={this.signIn.bind(this)}
+          onSignOut={this.signOut.bind(this)} />
 
         <div className="sp-sub-view sp-feed-view">
 

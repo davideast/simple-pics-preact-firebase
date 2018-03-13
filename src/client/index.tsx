@@ -1,11 +1,8 @@
 import { h, render, Component } from 'preact';
 import Router, { route } from 'preact-router';
 import AsyncRoute from 'preact-async-route';
-import Provider from 'preact-context-provider';
 import './style.css';
 import { asyncAuthListener } from '../pages/firebase-init';
-
-import { User } from '@firebase/auth-types';
 
 import { HomeFeed } from '../pages/home-feed';
 import { AppUser } from '../components/interfaces';

@@ -2,6 +2,7 @@ import { firebase } from '@firebase/app';
 import '@firebase/firestore';
 import { Component } from 'preact';
 
+import { FeedItem } from '../components/card';
 import { AppUser } from '../components/interfaces';
 
 const firebaseApp = firebase.initializeApp({
@@ -33,16 +34,23 @@ export const asyncAuthListener = async (comp: Component<any, any>) => {
   });
 };
 
-export const getAuthenticatedUser = async () => {
-  const auth = await asyncFirebaseApp.auth();
-  return new Promise<AppUser>((resolve, reject) => {
-    const unsub = auth.onAuthStateChanged(user => {
-      if(user !== null) {
-        resolve(user);
-        unsub(); 
-      }
-    }, reject);
-  });
+export const authState$ = {
+  async subscribe(callback: (user?: AppUser) => void) {
+    const auth = await asyncFirebaseApp.auth();
+    return auth.onAuthStateChanged(callback);
+  }
+};
+
+export const feedItem$ = {
+  subscribe(callback: (feedItems: FeedItem[]) => void) {
+    const feedCol = firestore.collection('feed');
+    return feedCol
+      .orderBy('timestamp', 'desc')
+      .onSnapshot(snap => {
+        const feedItems = snap.docs.map(d => d.data() as FeedItem);
+        callback(feedItems);
+      }, console.error);
+  }
 }
 
 export { firebaseApp, firestore, asyncFirebaseApp }
