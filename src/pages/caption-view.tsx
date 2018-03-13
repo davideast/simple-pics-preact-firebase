@@ -28,7 +28,6 @@ export interface CaptionViewProps {
 }
 
 export class CaptionView extends Component<CaptionViewProps, any> {
-  caption: HTMLTextAreaElement;
   frame: HTMLDivElement;
 
   async uploadPhoto(id, dataURL: string) {
@@ -84,11 +83,6 @@ export class CaptionView extends Component<CaptionViewProps, any> {
         </div>
 
         <div className="sp-action-bar">
-          <textarea
-            ref={(caption: HTMLTextAreaElement) => { this.caption = caption; }}
-            class="sp-caption-text">
-          </textarea>
-
           <div class="sp-action-bar sp-action-bar-row">
 
             <Button className="sp-btn-hollow" text="Cancel" onClick={() => {
@@ -99,7 +93,7 @@ export class CaptionView extends Component<CaptionViewProps, any> {
               // get a generated id from firestore
               const id = firestore.collection('_').doc().id
               const snap = await this.uploadPhoto(id, imageDataURL);
-              const caption = this.caption.value;
+              const caption = '';
               this.addFeedItem({ id, user, snap, caption });
               this.props.onSend();
             }} />

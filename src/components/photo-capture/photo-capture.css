@@ -22,4 +22,7 @@
   padding: 0;
   min-width: unset;
   min-height: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

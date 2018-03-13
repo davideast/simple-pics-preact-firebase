@@ -6,7 +6,11 @@ import { Button } from '../button';
 export const PhotoCapture = ({ onClick }) => {
   return (
     <div className="sp-photo-capture">
-      <Button text="" className="sp-take-photo" onClick={onClick} />
+      <div className="sp-take-photo" onClick={onClick}>
+        <img 
+          src="/images/camera.png" 
+          alt="Take Photo" />
+      </div>
     </div>
   );
 }

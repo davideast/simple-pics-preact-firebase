@@ -93,7 +93,6 @@ body, h1, h2, h3, h4, h5, p {
   align-items: center;
   flex-direction: column;
   padding: 20px;
-  background: #f5f5f5;
   height: 100vh;
 }
 
@@ -107,4 +106,5 @@ body, h1, h2, h3, h4, h5, p {
 .sp-action-bar-row {
   flex-direction: row;
   height: unset;
+  justify-content: center;
 }

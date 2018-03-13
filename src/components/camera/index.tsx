@@ -18,7 +18,7 @@ export interface CameraProps {
 
 const CameraButtons = (props: CameraProps) =>
   props.isCameraOpen ? 
-  <div className="sp-action-bar">
+  <div className="sp-action-bar sp-action-bar-row">
     <Button
       text="Close Camera"
       className="sp-btn-hollow"

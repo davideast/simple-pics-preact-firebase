@@ -16,7 +16,6 @@ export interface MediaViewState {
   imageDataURL?: string;
   imageHeight?: any;
   imageWidth?: any;
-  user: AppUser;
 }
 
 const CameraView = (props: CameraProps) => (
@@ -29,13 +28,12 @@ const CameraView = (props: CameraProps) => (
   </div>
 );
 
-export class MediaView extends Component<any, MediaViewState> {
+export class MediaView extends Component<{ user: AppUser }, MediaViewState> {
   auth?: FirebaseAuth;
 
   constructor() {
     super();
     this.state = {
-      user: null,
       isCameraOpen: false,
       view: 'camera' 
     };
@@ -66,7 +64,8 @@ export class MediaView extends Component<any, MediaViewState> {
 
   render() {
     const { isCameraOpen, imageDataURL, view, 
-      imageHeight, imageWidth, user } = this.state;
+      imageHeight, imageWidth } = this.state;
+    const { user } = this.props;
     const viewClass = `sp-view-holder show-${view}-view`;
     return (
       <div className="sp-root sp-full-view">
