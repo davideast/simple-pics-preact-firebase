@@ -2,7 +2,7 @@ import { h } from 'preact';
 import './header.css';
 
 import { firebase } from '@firebase/app';
-import { User } from '../interfaces';
+import { AppUser } from '../interfaces';
 
 import { Button } from '../button';
 import { Avatar, AvatarProps } from '../avatar';
@@ -28,7 +28,7 @@ export const Header = ({ user, menuVisible, profileClick }: HeaderProps) => {
 
 export const UserButton = ({ user, menuVisible, profileClick }: UserButtonProps) => {
   const menuVisibleClass = menuVisible ? 'full-opacity' : 'no-opacity';
-  const UserMenu = ({ user }: { user?: User }) => (
+  const UserMenu = ({ user }: { user?: AppUser }) => (
     <div class="sp-user-menu">
       <Avatar user={user} profileClick={profileClick} />
       <Menu className={menuVisibleClass}>

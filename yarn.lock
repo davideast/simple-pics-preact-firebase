@@ -4890,6 +4890,10 @@ preact-async-route@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/preact-async-route/-/preact-async-route-2.1.1.tgz#b81917d5f0d78f727dfab6b270237cd2dc71829e"
 
+preact-context-provider@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/preact-context-provider/-/preact-context-provider-1.1.1.tgz#15d48f10352c919557f49b798efdb68f2fccc9ed"
+
 preact-render-to-string@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-3.7.0.tgz#7db4177454bc01395e0d01d6ac07bc5e838e31ee"

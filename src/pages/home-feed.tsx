@@ -2,28 +2,39 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
 import { CollectionReference } from '@firebase/firestore-types';
-import { User } from '@firebase/auth-types';
+import { UserProp, AppUser } from '../components/interfaces';
 
 import { firebase } from '@firebase/app';
-import { firestore } from './firebase-init';
+import { firestore, asyncAuthListener } from './firebase-init';
 
 import { FeedItem, Card } from '../components/card';
 import { Header } from '../components/header';
 import { PhotoCapture } from '../components/photo-capture';
 
 export interface HomeFeedState {
-  user?: User;
+  user?: AppUser;
   feedItems: FeedItem[];
   menuVisible: boolean;
 }
 
+const CardList = ({ cards }) => (
+  <div className="sp-container">
+    {cards}
+  </div>
+);
+
+const CaptureButton = ({ isAuth }) => isAuth ?
+  <PhotoCapture onClick={() => route('/camera', true)} /> :
+  <span></span>;
+
+
 export class HomeFeed extends Component<any, HomeFeedState> {
   feedCol: CollectionReference;
+  authUnlisten: () => void;
 
   constructor() {
     super();
     this.state = {
-      user: null,
       feedItems: [],
       menuVisible: false,
     };
@@ -32,16 +43,14 @@ export class HomeFeed extends Component<any, HomeFeedState> {
   async componentWillMount() {
     this.feedCol = firestore.collection('feed');
     this.feedCol
-      .orderBy('timestamp')
+      .orderBy('timestamp', 'desc')
       .onSnapshot(snap => {
         const feedItems = snap.docs.map(d => d.data() as FeedItem);
         this.setState({ ...this.state, feedItems })
       }, console.error);
 
-    await import('@firebase/auth');
-    firebase.auth().onAuthStateChanged(user => {
-      this.setState({ ...this.state, user });
-    });
+      this.authUnlisten = await asyncAuthListener(this);
+    
   }
 
   toggleUserMenu() {
@@ -53,12 +62,8 @@ export class HomeFeed extends Component<any, HomeFeedState> {
 
   render() {
     const { user, feedItems, menuVisible } = this.state;
-    const { history } = this.props;
     const isAuth = !!user;
     const cards = feedItems.map(item => <Card follow={isAuth} item={item} />);
-
-    const captureComp = isAuth ?
-      <PhotoCapture onClick={() => route('/camera', true)} /> : '';
 
     return (
       <div className="sp-root">
@@ -66,16 +71,16 @@ export class HomeFeed extends Component<any, HomeFeedState> {
         <Header
           user={user}
           menuVisible={menuVisible}
-          profileClick={() => this.toggleUserMenu.bind(this)} />
+          profileClick={this.toggleUserMenu.bind(this)} />
 
         <div className="sp-sub-view sp-feed-view">
 
-          <div className="sp-container">
-            {cards}
-          </div>
+          <CardList cards={cards} />
 
-          {captureComp}
+          <CaptureButton isAuth={isAuth} />
+
         </div>
+
       </div>
     );
   }

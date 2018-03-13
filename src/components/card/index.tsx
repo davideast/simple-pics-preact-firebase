@@ -5,10 +5,10 @@ import { FieldValue } from '@firebase/firestore-types';
 
 import { Button } from '../button';
 import { Avatar } from '../avatar';
-import { User } from '../interfaces';
+import { AppUser } from '../interfaces';
 
 export interface FeedItem {
-  user: User;
+  user: AppUser;
   caption: string;
   imgURL: string;
   bucketLocation: string;

@@ -1,10 +1,10 @@
 import { h, ComponentProps } from 'preact';
 import './avatar.css';
 
-import { User } from '../interfaces';
+import { AppUser } from '../interfaces';
 
 export interface AvatarProps { 
-  user?: User;
+  user?: AppUser;
   profileClick?: () => void;
 };
 
