@@ -12,6 +12,8 @@ module.exports = {
       handler: 'cacheFirst',
     }
   ],
-  skipWaiting: true,
   clientsClaim: true,
+  importScripts: [
+    '/update-sw.js',
+  ],
 };

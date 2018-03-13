@@ -10,7 +10,7 @@
     "build:prod": "yarn build:clean && webpack -p && yarn copy:assets && yarn build:sw",
     "build:server": "webpack --config webpack.server.js",
     "build:sw": "workbox generateSW workbox-config.js",
-    "copy:assets": "cp -R src/client/images dist/images && cp src/client/manifest.json dist/manifest.json && cp src/client/index.html dist/index.html"
+    "copy:assets": "cp -R src/client/images dist/images && cp src/client/manifest.json dist/manifest.json && cp src/client/index.html dist/index.html && cp src/client/update-sw.js dist/update-sw.js"
   },
   "dependencies": {
     "@types/node": "^9.4.6",
@@ -21,7 +21,6 @@
     "node-noop": "^1.0.0",
     "preact": "^8.2.7",
     "preact-async-route": "^2.1.1",
-    "preact-context-provider": "^1.1.1",
     "preact-render-to-string": "^3.7.0",
     "preact-router": "^2.6.0",
     "ts-loader": "^4.0.1",

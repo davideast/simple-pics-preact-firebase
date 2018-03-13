@@ -7,8 +7,8 @@
 }
 
 .sp-card-content img {
-  width: 100%;
   display: flex;
+  width: 480px;
 }
 
 .sp-card-topbar {

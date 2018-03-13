@@ -14,26 +14,18 @@ body, h1, h2, h3, h4, h5, p {
   min-height: 100vh;
 }
 
-
-/* .sp-camera-view video {
-  background: #000;
-  max-height: 70vh;
-  width: 100%;
-} */
-
 .sp-container {
   margin: 0 auto;
   max-width: 840px;
   padding: 0px 20px;
   margin-top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .full-opacity {
   opacity: 1 !important;
-}
-
-.no-opacity {
-  opacity: 0 !important;
 }
 
 .sp-root {
@@ -44,7 +36,7 @@ body, h1, h2, h3, h4, h5, p {
 .sp-view-holder {
   display: flex;
   width: 300vw;
-  transition: transform .4s ease-in-out;
+  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
 }
 
 .sp-sub-view {
@@ -62,18 +54,6 @@ body, h1, h2, h3, h4, h5, p {
 
 .show-caption-view {
   transform: translateX(-100vw);
-}
-
-.sp-photo-frame {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-}
-
-.sp-captured-photo {
-  height: 100%;
-  width: 100%;
 }
 
 .sp-caption-text {
