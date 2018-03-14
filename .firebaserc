@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "prod": "simple-pics",
+    "base": "simple-pics-base"
+  }
+}

@@ -1,0 +1,43 @@
+.sp-view-holder {
+  display: flex;
+  width: 300vw;
+  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+}
+
+.sp-sub-view {
+  width: 100vw;
+}
+
+.sp-full-view {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.show-camera-view {
+  transform: translateX(0vw);
+}
+
+.show-capture-view {
+  transform: translateX(-100vw);
+}
+
+.sp-action-bar {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  height: 100vh;
+}
+
+.sp-action-bar button {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.sp-action-bar-row {
+  flex-direction: row;
+  height: unset;
+  justify-content: center;
+}

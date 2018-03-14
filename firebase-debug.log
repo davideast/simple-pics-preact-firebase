@@ -1,0 +1,32 @@
+[debug] [2018-03-14T23:37:54.285Z] ----------------------------------------------------------------------
+[debug] [2018-03-14T23:37:54.288Z] Command:       /Users/deast/.nvm/versions/node/v6.11.5/bin/node /Users/deast/.nvm/versions/node/v6.11.5/bin/firebase serve -p 5053
+[debug] [2018-03-14T23:37:54.289Z] CLI Version:   3.17.5
+[debug] [2018-03-14T23:37:54.289Z] Platform:      darwin
+[debug] [2018-03-14T23:37:54.289Z] Node Version:  v6.11.5
+[debug] [2018-03-14T23:37:54.291Z] Time:          Wed Mar 14 2018 17:37:54 GMT-0600 (MDT)
+[debug] [2018-03-14T23:37:54.292Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-14T23:37:54.317Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-14T23:37:54.317Z] > authorizing via signed-in user
+[debug] [2018-03-14T23:37:54.320Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/simple-pics-base  
+  
+ Wed Mar 14 2018 17:37:54 GMT-0600 (MDT)
+[debug] [2018-03-14T23:37:54.697Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-14T23:37:54.700Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/simple-pics-base/tokens  
+  
+ Wed Mar 14 2018 17:37:54 GMT-0600 (MDT)
+[debug] [2018-03-14T23:37:55.060Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-14T23:37:55.061Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/simple-pics-base  
+  
+ Wed Mar 14 2018 17:37:55 GMT-0600 (MDT)
+[debug] [2018-03-14T23:37:55.259Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/deast/Documents/preact/series-simple-pics/simple-pics-base'...
+[info] 
+[debug] [2018-03-14T23:37:55.263Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/1086751359556/clients/_:getWebAppConfig  
+  
+ Wed Mar 14 2018 17:37:55 GMT-0600 (MDT)
+[debug] [2018-03-14T23:37:55.581Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] ✔  hosting: Local server: http://localhost:5053
+

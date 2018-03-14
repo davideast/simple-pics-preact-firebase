@@ -1,0 +1,28 @@
+.sp-photo-capture {
+  height: 64px;
+  position:  fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  display:  flex;
+  justify-content: flex-end;
+  padding: 0 14px;
+}
+
+.sp-take-photo {
+  box-shadow: rgba(0, 0, 0, 0.26) 0px 2px 5px;
+  cursor: pointer;
+  height: 64px;
+  width: 64px;
+  border-radius: 50000%;
+  outline: none;
+  background-color: #FB8C00;
+  position: relative;
+  top: -14px;
+  padding: 0;
+  min-width: unset;
+  min-height: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

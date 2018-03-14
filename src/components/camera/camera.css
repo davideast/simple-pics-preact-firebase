@@ -1,0 +1,14 @@
+
+.sp-camera video,
+.sp-camera-frame {
+  width: 100%;
+  height: 70vh;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sp-camera-canvas {
+  display: none;
+}
