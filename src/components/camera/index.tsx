@@ -14,6 +14,7 @@ export interface CameraProps {
   onCameraClose: () => void;
   onCameraPhoto: (photo: CapturedPhoto) => void;
   isCameraOpen: boolean;
+  stream: MediaStream;
 }
 
 const CameraButtons = (props: CameraProps) =>
@@ -38,24 +39,20 @@ export class Camera extends Component<CameraProps, any> {
 
   video: HTMLVideoElement;
   canvas: HTMLCanvasElement;
-  stream: MediaStream;
   src: string;
 
-  async openCamera() {
+  openCamera() {
     // A user interaction ("click") must trigger video.play()
     // or it will fail on android chrome
-    this.stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user' }
-    });
-    this.src = URL.createObjectURL(this.stream);
+    this.src = URL.createObjectURL(this.props.stream);
     this.video.src = this.src;
     this.video.play();
     this.props.onCameraOpen();
   }
 
   closeTrack() {
-    if (typeof this.stream !== 'undefined') {
-      const track = this.stream.getTracks()[0];
+    if (typeof this.props.stream !== 'undefined') {
+      const track = this.props.stream.getTracks()[0];
       track.stop();
       this.video.pause();
     }
@@ -76,19 +73,13 @@ export class Camera extends Component<CameraProps, any> {
 
     context.drawImage(this.video, 0, 0, imageWidth, imageHeight);
 
-    const lowRes = this.canvas.toDataURL('image/jpeg', 0.3);
+    const lowRes = this.canvas.toDataURL('image/jpeg', 0.2);
     
     this.props.onCameraPhoto({ lowRes, imageHeight, imageWidth });
   }
 
   render() {
-    const { isCameraOpen } = this.props;
-
-    // Avoid streaming the media if the 
-    // user asks to close the camera
-    if (!isCameraOpen) {
-      this.closeTrack();
-    }
+    const { isCameraOpen, stream } = this.props;
 
     return (
       <div>
@@ -103,6 +94,7 @@ export class Camera extends Component<CameraProps, any> {
 
         <CameraButtons 
           isCameraOpen={isCameraOpen}
+          stream={stream}
           onCameraClose={this.closeCamera.bind(this)}
           onCameraPhoto={this.takePhoto.bind(this)}
           onCameraOpen={this.openCamera.bind(this)} />

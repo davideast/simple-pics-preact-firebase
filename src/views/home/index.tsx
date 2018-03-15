@@ -13,10 +13,11 @@ export interface HomeViewProps {
   feedItems?: FeedItem[];
   menuVisible?: boolean;
   onToggleUserMenu: (menuVisible: boolean) => void;
+  onStreamOpen: () => void;
 }
 
-const CaptureButton = ({ isAuth }) => isAuth ?
-  <PhotoCapture onClick={() => route('/camera', true)} /> :
+const CaptureButton = ({ isAuth, onStreamOpen }) => isAuth ?
+  <PhotoCapture onClick={onStreamOpen} /> :
   <span></span>;
 
 export class HomeView extends Component<HomeViewProps, never> {
@@ -46,7 +47,7 @@ export class HomeView extends Component<HomeViewProps, never> {
             {cards}
           </div>
 
-          <CaptureButton isAuth={true} />
+          <CaptureButton isAuth={true} onStreamOpen={this.props.onStreamOpen} />
 
         </div>
 

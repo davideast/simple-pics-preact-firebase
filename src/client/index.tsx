@@ -14,12 +14,14 @@ export interface AppState {
   user?: AppUser;
   feedItems: FeedItem[];
   view?: ViewName;
+  stream?: MediaStream;
 }
 
 class App extends Component<any, AppState> {
 
   state = { 
     user: null,
+    view: 'feed' as ViewName,
     feedItems: [{
       user: {
         displayName: 'David East',
@@ -59,15 +61,24 @@ class App extends Component<any, AppState> {
     gotoView(view: ViewName) {
       this.setState({ ...this.state, view });
     },
+    async onStreamOpen() {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user' }
+      });
+      this.setState({ ...this.state, stream });
+      route('/camera', true)
+    },
     onCameraOpen() {
       this.setState({ ...this.state, isCameraOpen: true });
     },
     onCameraClose() {
-      route('/', true);
+      this.state.stream.getTracks()[0].stop();
+      this.setState({ ...this.state, isCameraOpen: false, stream: null });
     },
     onSendPhoto(item: AddFeedItem) {
+      this.state.stream.getTracks()[0].stop();
       const feedItems = [item, ...this.state.feedItems];
-      this.setState({ ...this.state, feedItems });
+      this.setState({ ...this.state, feedItems, stream: null });
       route('/', true);
     },
     onCameraPhoto({ lowRes, imageHeight, imageWidth }: CapturedPhoto) {
@@ -89,6 +100,7 @@ class App extends Component<any, AppState> {
           path="/" 
           {...this.state} 
           onToggleUserMenu={this.actions.onToggleMenu.bind(this)} 
+          onStreamOpen={this.actions.onStreamOpen.bind(this)}
         />
         <MediaView 
           path="/camera" 

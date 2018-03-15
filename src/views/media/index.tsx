@@ -7,7 +7,7 @@ import { AppUser, UserProp, PathProp } from '../../components/interfaces';
 import { Camera, CameraProps, CapturedPhoto } from '../../components/camera';
 import { CaptureView } from '../capture';
 
-export type ViewName = 'camera' | 'capture';
+export type ViewName = 'camera' | 'capture' | 'feed';
 
 export interface MediaViewProps extends UserProp, PathProp, CapturedPhoto { 
   gotoView: (view: ViewName) => void;
@@ -17,11 +17,13 @@ export interface MediaViewProps extends UserProp, PathProp, CapturedPhoto {
   onSendPhoto: (photo: CapturedPhoto) => void;
   view?: ViewName;
   isCameraOpen?: boolean;
+  stream?: MediaStream;
 }
 
 const CameraView = (props: CameraProps) => (
   <div className="sp-sub-view sp-camera-view">
     <Camera
+      stream={props.stream}
       isCameraOpen={props.isCameraOpen}
       onCameraOpen={props.onCameraOpen}
       onCameraClose={props.onCameraClose}
@@ -30,15 +32,17 @@ const CameraView = (props: CameraProps) => (
 );
 
 export class MediaView extends Component<MediaViewProps, never> {
+  
   render() {
     const { isCameraOpen, lowRes, view, 
-      imageHeight, imageWidth, user } = this.props;
+      imageHeight, imageWidth, user, stream } = this.props;
     const viewClass = `sp-view-holder show-${view}-view`;
     return (
       <div className="sp-root sp-full-view">
         <div className={viewClass}>
 
           <CameraView
+            stream={stream}
             isCameraOpen={isCameraOpen}
             onCameraOpen={this.props.onCameraOpen.bind(this)}
             onCameraClose={this.props.onCameraClose.bind(this)}
@@ -50,15 +54,7 @@ export class MediaView extends Component<MediaViewProps, never> {
             lowRes={lowRes}
             imageHeight={imageHeight}
             imageWidth={imageWidth}
-            onSendPhoto={item => { 
-              // set state to turn off MediaStream for camera and afterwards
-              // route back home
-              debugger;
-              this.props.onSendPhoto(item);
-              // this.setState({ ...this.state, isCameraOpen: false }, () => {
-              //   route('/', true);
-              // });
-            }}
+            onSendPhoto={this.props.onSendPhoto}
             onCancelPhoto={() => this.props.gotoView('camera') } />
 
         </div>

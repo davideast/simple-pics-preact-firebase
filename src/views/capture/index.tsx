@@ -62,16 +62,19 @@ export class CaptureView extends Component<CaptureViewProps, any> {
         <div className="sp-action-bar">
           <div class="sp-action-bar sp-action-bar-row">
 
-            <Button className="sp-btn-hollow" text="Cancel" onClick={() => {
-              this.props.onCancelPhoto();
-            }} />
+            <Button 
+              className="sp-btn-hollow" 
+              text="Cancel" 
+              onClick={this.props.onCancelPhoto} />
 
             <Button text="Save" onClick={() => {
-              debugger;
               this.props.onSendPhoto({
                 id: '',
                 lowRes,
-                user: { displayName: 'David East', photoURL: '#' }
+                user: { 
+                  displayName: 'David East', 
+                  photoURL: 'https://lh5.googleusercontent.com/-4aPtsf44t70/AAAAAAAAAAI/AAAAAAAAAFU/g4bLHgPKesg/photo.jpg'
+                }
               });
             }} />
 

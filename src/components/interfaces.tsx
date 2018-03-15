@@ -5,7 +5,7 @@ export interface User {
   uid: string;
 }
 
-type Partial<T> = {
+export type Partial<T> = {
   [P in keyof T]?: T[P];
 };
 
