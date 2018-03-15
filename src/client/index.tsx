@@ -119,3 +119,77 @@ class App extends Component<any, AppState> {
 }
 
 render(<App />, document.body);
+
+function showRefreshUI(registration: ServiceWorkerRegistration) {
+  const button = document.createElement('button');
+  button.style.position = 'sticky';
+  button.style.bottom = '24px';
+  button.style.left = '24px';
+  button.textContent = 'NEW VERSION! REFRESH TO UPDATE';
+  button.classList.add('sp-btn', 'sp-btn-full');
+
+  button.addEventListener('click', e => {
+    // tell the SW to skipWaiting
+    // first check if waiting exists
+    if(!registration.waiting) {
+      return;
+    }
+
+    // sends a message to the service worker
+    registration.waiting.postMessage('skipWaiting');
+  });
+
+  document.body.appendChild(button);
+}
+
+function onNewServiceWorker(registration: ServiceWorkerRegistration, callback) {
+  // is there a SW waiting?
+  if(registration.waiting) {
+    return callback();
+  }
+
+  // listen for the installed state change
+  function listenInstalledStateChange() {
+    registration.installing.addEventListener('statechange', (e: any) => {
+      if(e.target.state === 'installed') {
+        callback();
+      }
+    });
+  }
+
+  if(registration.installing) {
+    listenInstalledStateChange();
+  }
+  
+  // Add a listener for a new SW
+  registration.addEventListener('updatefound', listenInstalledStateChange);
+}
+
+window.addEventListener('load', () => {
+
+  if('serviceWorker' in navigator) {
+
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+      
+      if(!navigator.serviceWorker.controller) {
+        // new service worker that will active immediately
+        return;
+      }
+
+      var preventDevToolsLoop;
+      navigator.serviceWorker.addEventListener('controllerchange', e => {
+        if (preventDevToolsLoop) return;
+        preventDevToolsLoop = true;
+        window.location.reload();
+      });
+
+      onNewServiceWorker(registration, () => {
+        // show a refresh page button
+        showRefreshUI(registration);
+      });
+      
+    });
+
+  }
+
+});

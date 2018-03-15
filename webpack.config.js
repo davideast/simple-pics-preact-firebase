@@ -33,6 +33,7 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'src/client/images/**/*', to: './images', flatten: true },
       'src/client/index.html',
+      'src/client/update-sw.js'
     ]),
   ],
 };

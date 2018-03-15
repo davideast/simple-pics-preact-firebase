@@ -6,8 +6,9 @@
   "license": "MIT",
   "scripts": {
     "build:clean": "rm -rf dist",
-    "build:client": "yarn build:clean && webpack",
-    "build:prod": "yarn build:clean && webpack -p"
+    "build:client": "yarn build:clean && webpack && yarn build:sw",
+    "build:prod": "yarn build:clean && webpack -p",
+    "build:sw": "workbox generateSW workbox-config.js"
   },
   "dependencies": {
     "firebase": "^4.10.1",
