@@ -73,12 +73,13 @@ class App extends Component<any, AppState> {
     },
     onCameraClose() {
       this.state.stream.getTracks()[0].stop();
-      this.setState({ ...this.state, isCameraOpen: false, stream: null });
+      this.setState({ ...this.state, isCameraOpen: false, stream: null, view: 'camera' });
+      route('/', true);
     },
     onSendPhoto(item: AddFeedItem) {
       this.state.stream.getTracks()[0].stop();
       const feedItems = [item, ...this.state.feedItems];
-      this.setState({ ...this.state, feedItems, stream: null });
+      this.setState({ ...this.state, feedItems, stream: null, view: 'camera', isCameraOpen: false });
       route('/', true);
     },
     onCameraPhoto({ lowRes, imageHeight, imageWidth }: CapturedPhoto) {
