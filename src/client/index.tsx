@@ -66,8 +66,7 @@ class App extends Component<any, AppState> {
       route('/', true);
     },
     onSendPhoto(item: AddFeedItem) {
-      debugger;
-      const feedItems = [...this.state.feedItems, item];
+      const feedItems = [item, ...this.state.feedItems];
       this.setState({ ...this.state, feedItems });
       route('/', true);
     },
