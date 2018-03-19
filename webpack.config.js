@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: "production",
@@ -28,6 +29,11 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "style.css",
       chunkFilename: "[id].css"
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: 'src/client/images/**/*', to: './images', flatten: true },
+      'src/client/index.html',
+      'src/client/update-sw.js'
+    ]),
   ]
 };
